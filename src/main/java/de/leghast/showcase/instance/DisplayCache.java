@@ -3,6 +3,7 @@ package de.leghast.showcase.instance;
 import org.bukkit.Axis;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.util.Transformation;
 
 public class DisplayCache {
 
@@ -25,6 +26,10 @@ public class DisplayCache {
         return size;
     }
 
+    public ItemDisplay getDisplay(){
+        return display;
+    }
+
     public void move(Axis axis, double factor){
         switch (axis){
             case X -> {
@@ -44,11 +49,32 @@ public class DisplayCache {
 
     public void rotate(Axis axis, double factor){
         float radiant = (float) Math.toRadians(factor);
+        Transformation transformation = display.getTransformation();
         switch (axis){
-            case X -> display.getTransformation().getLeftRotation().rotateX(radiant);
-            case Y -> display.getTransformation().getLeftRotation().rotateY(radiant);
-            case Z -> display.getTransformation().getLeftRotation().rotateZ(radiant);
+            case X -> transformation.getLeftRotation().rotateX(radiant);
+            case Y -> transformation.getLeftRotation().rotateY(radiant);
+            case Z -> transformation.getLeftRotation().rotateZ(radiant);
         }
+        display.setTransformation(transformation);
+        System.out.println("Rotation executed");
+    }
+
+    public void scaleUp(double factor){
+        Transformation transformation = display.getTransformation();
+        transformation.getScale().set(transformation.getScale().x * factor);
+        display.setTransformation(transformation);
+
+        interaction.setInteractionWidth(display.getTransformation().getScale().x);
+        interaction.setInteractionHeight(display.getTransformation().getScale().y);
+    }
+
+    public void scaleDown(double factor){
+        Transformation transformation = display.getTransformation();
+        transformation.getScale().set(transformation.getScale().x / factor);
+        display.setTransformation(transformation);
+
+        interaction.setInteractionWidth(display.getTransformation().getScale().x);
+        interaction.setInteractionHeight(display.getTransformation().getScale().y);
     }
 
 }

@@ -43,7 +43,7 @@ public class InventoryClickListener implements Listener {
 
         switch (slot){
             case 8 -> player.getInventory().addItem(new ItemStack(ConfigManager.getToolMaterial()));
-            case 18 -> settings.setPage(Page.ROTATION);
+            case 9 -> settings.setPage(Page.ROTATION);
             case 11 -> positionSettings.setFactor(0.25);
             case 12 -> positionSettings.setFactor(0.5);
             case 13 -> positionSettings.setFactor(1);

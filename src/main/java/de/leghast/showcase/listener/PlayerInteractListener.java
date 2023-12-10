@@ -30,7 +30,13 @@ public class PlayerInteractListener implements Listener {
                 if(main.getEntityManager().isLinked(interaction)){
                     e.setCancelled(true);
                     ItemDisplay display = main.getEntityManager().getItemDisplay(interaction);
-                    main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayCache(display, main.getEntityManager().getInteraction(display)));
+                    if(main.getClipboardManager().hasClipboard(player.getUniqueId())){
+                        if(display != main.getClipboardManager().getClipboard(player.getUniqueId()).getDisplay()){
+                            main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayCache(display, main.getEntityManager().getInteraction(display)));
+                        }
+                    }else{
+                        main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayCache(display, main.getEntityManager().getInteraction(display)));
+                    }
                 }
             }
         }
