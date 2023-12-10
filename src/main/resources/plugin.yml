@@ -1,0 +1,6 @@
+name: Showcase
+version: '${project.version}'
+main: de.leghast.showcase.Showcase
+api-version: '1.20'
+authors: [GhastCraftHD]
+description: A tool that makes working with Item Displays easy
