@@ -1,9 +1,10 @@
 package de.leghast.showcase.ui.page;
 
 import de.leghast.showcase.Showcase;
+import de.leghast.showcase.instance.DisplayWrapper;
 import de.leghast.showcase.manager.ConfigManager;
-import org.bukkit.Axis;
 import org.bukkit.Material;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -11,13 +12,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PositionPage {
+public class TransformPage {
 
-    public static ItemStack[] getPositionPage(Showcase main, Player player){
+    public static ItemStack[] getTransformPage(Showcase main, Player player){
         ItemStack[] content = new ItemStack[45];
 
-        double factor = main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPositionSettings().getFactor();
-        Axis axis = main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPositionSettings().getAxis();
+        DisplayWrapper wrapper = main.getClipboardManager().getClipboard(player.getUniqueId());
 
         ItemStack position = new ItemStack(Material.MAGENTA_GLAZED_TERRACOTTA);
         ItemMeta positionMeta = position.getItemMeta();
@@ -27,7 +27,6 @@ public class PositionPage {
         positionLore.add("§7of the item display");
         positionMeta.setLore(positionLore);
         position.setItemMeta(positionMeta);
-        PageUtil.addGlint(position);
         content[0] = position;
 
         ItemStack size = new ItemStack(Material.PUFFERFISH);
@@ -58,6 +57,7 @@ public class PositionPage {
         transformLore.add("§7of the item display");
         transformMeta.setLore(transformLore);
         transform.setItemMeta(transformMeta);
+        PageUtil.addGlint(transform);
         content[27] = transform;
 
         ItemStack adjuster = new ItemStack(ConfigManager.getToolMaterial());
@@ -70,78 +70,50 @@ public class PositionPage {
         adjuster.setItemMeta(adjusterMeta);
         content[8] = adjuster;
 
-        ItemStack quarter = new ItemStack(Material.COAL);
-        ItemMeta quarterMeta = quarter.getItemMeta();
-        quarterMeta.setDisplayName("§70.25 blocks");
-        quarter.setItemMeta(quarterMeta);
-        if(factor == 0.25){
-            PageUtil.addGlint(quarter);
+        ItemStack firstPerson = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        ItemMeta firstPersonMeta = firstPerson.getItemMeta();
+        firstPersonMeta.setDisplayName("§7First Person");
+        firstPerson.setItemMeta(firstPersonMeta);
+        if(wrapper.getTransform() == ItemDisplay.ItemDisplayTransform.FIRSTPERSON_RIGHTHAND){
+            PageUtil.addGlint(firstPerson);
         }
-        content[11] = quarter;
+        content[20] = firstPerson;
 
-        ItemStack half = new ItemStack(Material.IRON_INGOT);
-        ItemMeta halfMeta = half.getItemMeta();
-        halfMeta.setDisplayName("§70.5 blocks");
-        half.setItemMeta(halfMeta);
-        if(factor == 0.5){
-            PageUtil.addGlint(half);
+        ItemStack fixed = new ItemStack(Material.SHIELD);
+        ItemMeta fixedMeta = fixed.getItemMeta();
+        fixedMeta.setDisplayName("§7Fixed");
+        fixed.setItemMeta(fixedMeta);
+        if(wrapper.getTransform() == ItemDisplay.ItemDisplayTransform.FIXED){
+            PageUtil.addGlint(fixed);
         }
-        content[12] = half;
+        content[21] = fixed;
 
-        ItemStack full = new ItemStack(Material.DIAMOND);
-        ItemMeta fullMeta = full.getItemMeta();
-        fullMeta.setDisplayName("§71 block");
-        full.setItemMeta(fullMeta);
-        if(factor == 1){
-            PageUtil.addGlint(full);
+        ItemStack gui = new ItemStack(Material.CHEST);
+        ItemMeta guiMeta = gui.getItemMeta();
+        guiMeta.setDisplayName("§7GUI");
+        gui.setItemMeta(guiMeta);
+        if(wrapper.getTransform() == ItemDisplay.ItemDisplayTransform.GUI){
+            PageUtil.addGlint(gui);
         }
-        content[13] = full;
+        content[22] = gui;
 
-        ItemStack tenBlocks = new ItemStack(Material.GRASS_BLOCK);
-        ItemMeta tenBlocksMeta = tenBlocks.getItemMeta();
-        tenBlocksMeta.setDisplayName("§710 blocks");
-        tenBlocks.setItemMeta(tenBlocksMeta);
-        if(factor == 10){
-            PageUtil.addGlint(tenBlocks);
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+        ItemMeta headMeta = head.getItemMeta();
+        headMeta.setDisplayName("§7Head");
+        head.setItemMeta(headMeta);
+        if(wrapper.getTransform() == ItemDisplay.ItemDisplayTransform.HEAD){
+            PageUtil.addGlint(head);
         }
-        content[14] = tenBlocks;
+        content[23] = head;
 
-        ItemStack custom = new ItemStack(Material.PAPER);
-        ItemMeta customMeta = custom.getItemMeta();
-        customMeta.setDisplayName("§7Custom factor §e(" + factor + " block" + (factor == 1 ? "" : "s") + ")");
-        custom.setItemMeta(customMeta);
-        boolean condition = factor != 0.25 && factor != 0.5 && factor != 1 && factor != 10;
-        if(condition){
-            PageUtil.addGlint(custom);
+        ItemStack thirdPerson = new ItemStack(Material.ORANGE_STAINED_GLASS_PANE);
+        ItemMeta thirdPersonMeta = thirdPerson.getItemMeta();
+        thirdPersonMeta.setDisplayName("§7Third Person");
+        thirdPerson.setItemMeta(thirdPersonMeta);
+        if(wrapper.getTransform() == ItemDisplay.ItemDisplayTransform.THIRDPERSON_RIGHTHAND){
+            PageUtil.addGlint(thirdPerson);
         }
-        content[15] = custom;
-
-        ItemStack x = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-        ItemMeta xMeta = x.getItemMeta();
-        xMeta.setDisplayName("§cX-Axis");
-        x.setItemMeta(xMeta);
-        if(axis == Axis.X){
-            PageUtil.addGlint(x);
-        }
-        content[30] = x;
-
-        ItemStack y = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
-        ItemMeta yMeta = y.getItemMeta();
-        yMeta.setDisplayName("§aY-Axis");
-        y.setItemMeta(yMeta);
-        if(axis == Axis.Y){
-            PageUtil.addGlint(y);
-        }
-        content[31] = y;
-
-        ItemStack z = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
-        ItemMeta zMeta = z.getItemMeta();
-        zMeta.setDisplayName("§9Z-Axis");
-        z.setItemMeta(zMeta);
-        if(axis == Axis.Z){
-            PageUtil.addGlint(z);
-        }
-        content[32] = z;
+        content[24] = thirdPerson;
 
         ItemStack delete = new ItemStack(Material.BARRIER);
         ItemMeta deleteMeta = delete.getItemMeta();

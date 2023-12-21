@@ -29,6 +29,16 @@ public class RotationPage {
         position.setItemMeta(positionMeta);
         content[0] = position;
 
+        ItemStack size = new ItemStack(Material.PUFFERFISH);
+        ItemMeta sizeMeta = size.getItemMeta();
+        sizeMeta.setDisplayName("§eSize");
+        List<String> sizeLore = new ArrayList<>();
+        sizeLore.add("§7Adjust the size");
+        sizeLore.add("§7of the item display");
+        sizeMeta.setLore(sizeLore);
+        size.setItemMeta(sizeMeta);
+        content[9] = size;
+
         ItemStack rotation = new ItemStack(Material.ITEM_FRAME);
         ItemMeta rotationMeta = rotation.getItemMeta();
         rotationMeta.setDisplayName("§eRotation");
@@ -38,7 +48,17 @@ public class RotationPage {
         rotationMeta.setLore(rotationLore);
         rotation.setItemMeta(rotationMeta);
         PageUtil.addGlint(rotation);
-        content[9] = rotation;
+        content[18] = rotation;
+
+        ItemStack transform = new ItemStack(Material.BAMBOO_HANGING_SIGN);
+        ItemMeta transformMeta = transform.getItemMeta();
+        transformMeta.setDisplayName("§eTransform");
+        List<String> transformLore = new ArrayList<>();
+        transformLore.add("§7Set the transform");
+        transformLore.add("§7of the item display");
+        transformMeta.setLore(transformLore);
+        transform.setItemMeta(transformMeta);
+        content[27] = transform;
 
         ItemStack adjuster = new ItemStack(ConfigManager.getToolMaterial());
         ItemMeta adjusterMeta = adjuster.getItemMeta();
@@ -122,6 +142,18 @@ public class RotationPage {
             PageUtil.addGlint(z);
         }
         content[32] = z;
+
+        ItemStack delete = new ItemStack(Material.BARRIER);
+        ItemMeta deleteMeta = delete.getItemMeta();
+        deleteMeta.setDisplayName("§cDelete Item Display");
+        delete.setItemMeta(deleteMeta);
+        content[44] = delete;
+
+        ItemStack deselect = new ItemStack(Material.STRUCTURE_VOID);
+        ItemMeta deselectMeta = deselect.getItemMeta();
+        deselectMeta.setDisplayName("§cDeselect Item Display");
+        deselect.setItemMeta(deselectMeta);
+        content[26] = deselect;
 
         ItemStack filler = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
         ItemMeta fillerMeta = filler.getItemMeta();

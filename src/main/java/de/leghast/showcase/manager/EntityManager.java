@@ -87,6 +87,7 @@ public class EntityManager {
 
     public void removeInteractionEntity(Interaction interaction){
         if(isLinked(interaction)){
+            System.out.println("Removed Interaction");
             ItemDisplay display = getItemDisplay(interaction);
             unlinkEntities(display, interaction);
             interaction.remove();

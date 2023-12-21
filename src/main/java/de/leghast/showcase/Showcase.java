@@ -23,11 +23,6 @@ public final class Showcase extends JavaPlugin {
         initialise();
     }
 
-    @Override
-    public void onDisable() {
-        terminate();
-    }
-
     private void initialiseManagers(){
         ConfigManager.setupConfig(this);
         entityManager = new EntityManager(this);
@@ -50,14 +45,7 @@ public final class Showcase extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(this), this);
-    }
-
-    private void terminate(){
-        for(World world : Bukkit.getWorlds()){
-            for(Chunk chunk : world.getLoadedChunks()){
-                entityManager.removeInteractionEntitiesFromChunk(chunk);
-            }
-        }
+        Bukkit.getPluginManager().registerEvents(new WorldListener(this), this);
     }
 
     public EntityManager getEntityManager(){

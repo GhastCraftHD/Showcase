@@ -5,13 +5,13 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.util.Transformation;
 
-public class DisplayCache {
+public class DisplayWrapper {
 
     private ItemDisplay display;
     private Interaction interaction;
     private double size;
 
-    public DisplayCache(ItemDisplay display, Interaction interaction){
+    public DisplayWrapper(ItemDisplay display, Interaction interaction){
         this.display = display;
         this.interaction = interaction;
         size = display.getTransformation().getScale().x;
@@ -56,7 +56,6 @@ public class DisplayCache {
             case Z -> transformation.getLeftRotation().rotateZ(radiant);
         }
         display.setTransformation(transformation);
-        System.out.println("Rotation executed");
     }
 
     public void scaleUp(double factor){
@@ -64,8 +63,9 @@ public class DisplayCache {
         transformation.getScale().set(transformation.getScale().x * factor);
         display.setTransformation(transformation);
 
-        interaction.setInteractionWidth(display.getTransformation().getScale().x);
-        interaction.setInteractionHeight(display.getTransformation().getScale().y);
+        interaction.teleport(display.getLocation().subtract(0, display.getTransformation().getScale().y/2, 0));
+        resizeInteraction();
+
     }
 
     public void scaleDown(double factor){
@@ -73,6 +73,25 @@ public class DisplayCache {
         transformation.getScale().set(transformation.getScale().x / factor);
         display.setTransformation(transformation);
 
+        interaction.teleport(display.getLocation().subtract(0, display.getTransformation().getScale().y/2, 0));
+        resizeInteraction();
+    }
+
+    public ItemDisplay.ItemDisplayTransform getTransform(){
+        return display.getItemDisplayTransform();
+    }
+
+    public void setTransform(ItemDisplay.ItemDisplayTransform transform){
+        display.setItemDisplayTransform(transform);
+        resizeInteraction();
+    }
+
+    public void remove(){
+        display.remove();
+        interaction.remove();
+    }
+
+    private void resizeInteraction(){
         interaction.setInteractionWidth(display.getTransformation().getScale().x);
         interaction.setInteractionHeight(display.getTransformation().getScale().y);
     }

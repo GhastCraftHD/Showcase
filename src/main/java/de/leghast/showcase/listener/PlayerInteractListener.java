@@ -1,10 +1,11 @@
 package de.leghast.showcase.listener;
 
 import de.leghast.showcase.Showcase;
-import de.leghast.showcase.instance.DisplayCache;
+import de.leghast.showcase.instance.DisplayWrapper;
 import de.leghast.showcase.instance.settings.AdjusterSettings;
 import de.leghast.showcase.manager.ConfigManager;
 import de.leghast.showcase.ui.UserInterface;
+import de.leghast.showcase.util.Util;
 import org.bukkit.Material;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
@@ -32,10 +33,12 @@ public class PlayerInteractListener implements Listener {
                     ItemDisplay display = main.getEntityManager().getItemDisplay(interaction);
                     if(main.getClipboardManager().hasClipboard(player.getUniqueId())){
                         if(display != main.getClipboardManager().getClipboard(player.getUniqueId()).getDisplay()){
-                            main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayCache(display, main.getEntityManager().getInteraction(display)));
+                            main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayWrapper(display, main.getEntityManager().getInteraction(display)));
+                        }else{
+                            main.getClipboardManager().removeClipboard(player.getUniqueId());
                         }
                     }else{
-                        main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayCache(display, main.getEntityManager().getInteraction(display)));
+                        main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayWrapper(display, main.getEntityManager().getInteraction(display)));
                     }
                 }
             }
@@ -49,34 +52,40 @@ public class PlayerInteractListener implements Listener {
 
         if(material == ConfigManager.getToolMaterial()){
             e.setCancelled(true);
-            if(e.getAction().isLeftClick()){
-                AdjusterSettings settings = main.getSettingsManager().getAdjusterSettings(player.getUniqueId());
-                switch (settings.getPage()){
-                    case POSITION -> main.getClipboardManager().getClipboard(player.getUniqueId()).move(
-                            settings.getPositionSettings().getAxis(),
-                            settings.getPositionSettings().getFactor()
-                    );
-                    case ROTATION -> main.getClipboardManager().getClipboard(player.getUniqueId()).rotate(
-                            settings.getPositionSettings().getAxis(),
-                            settings.getPositionSettings().getFactor()
-                    );
-                }
-            }else if(e.getAction().isRightClick()){
-                if(player.isSneaking()){
-                    new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
-                }else{
+            if(main.getClipboardManager().hasClipboard(player.getUniqueId())){
+                if(e.getAction().isLeftClick()){
                     AdjusterSettings settings = main.getSettingsManager().getAdjusterSettings(player.getUniqueId());
                     switch (settings.getPage()){
                         case POSITION -> main.getClipboardManager().getClipboard(player.getUniqueId()).move(
                                 settings.getPositionSettings().getAxis(),
-                                -settings.getPositionSettings().getFactor()
+                                settings.getPositionSettings().getFactor()
                         );
                         case ROTATION -> main.getClipboardManager().getClipboard(player.getUniqueId()).rotate(
-                                settings.getPositionSettings().getAxis(),
-                                -settings.getPositionSettings().getFactor()
+                                settings.getRotationSettings().getAxis(),
+                                settings.getRotationSettings().getFactor()
                         );
+                        case SIZE -> main.getClipboardManager().getClipboard(player.getUniqueId()).scaleUp(settings.getSizeSettings().getFactor());
+                    }
+                }else if(e.getAction().isRightClick()){
+                    if(player.isSneaking()){
+                        new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
+                    }else{
+                        AdjusterSettings settings = main.getSettingsManager().getAdjusterSettings(player.getUniqueId());
+                        switch (settings.getPage()){
+                            case POSITION -> main.getClipboardManager().getClipboard(player.getUniqueId()).move(
+                                    settings.getPositionSettings().getAxis(),
+                                    -settings.getPositionSettings().getFactor()
+                            );
+                            case ROTATION -> main.getClipboardManager().getClipboard(player.getUniqueId()).rotate(
+                                    settings.getRotationSettings().getAxis(),
+                                    -settings.getRotationSettings().getFactor()
+                            );
+                            case SIZE -> main.getClipboardManager().getClipboard(player.getUniqueId()).scaleDown(settings.getSizeSettings().getFactor());
+                        }
                     }
                 }
+            }else {
+                player.sendMessage(Util.PREFIX + "§cYou have no Item Display selected");
             }
         }
     }

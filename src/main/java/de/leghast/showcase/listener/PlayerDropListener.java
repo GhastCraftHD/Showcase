@@ -1,7 +1,7 @@
 package de.leghast.showcase.listener;
 
 import de.leghast.showcase.Showcase;
-import de.leghast.showcase.instance.DisplayCache;
+import de.leghast.showcase.instance.DisplayWrapper;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +25,7 @@ public class PlayerDropListener implements Listener {
                     player.getLocation().add(0, 1, 0),
                     e.getItemDrop().getItemStack().getType()
             );
-            main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayCache(display, main.getEntityManager().getInteraction(display)));
+            main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayWrapper(display, main.getEntityManager().getInteraction(display)));
         }
     }
 

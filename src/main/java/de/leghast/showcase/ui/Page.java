@@ -2,8 +2,10 @@ package de.leghast.showcase.ui;
 
 public enum Page {
 
-    POSITION("§eAdjust the item displays position"),
-    ROTATION("§eAdjust the item displays rotation");
+    POSITION("§eAdjust the displays position"),
+    SIZE("§eAdjust the displays size"),
+    ROTATION("§eAdjust the displays rotation"),
+    TRANSFORM("§eAdjust the displays transform");
 
     private String title;
 
