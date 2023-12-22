@@ -69,10 +69,13 @@ public class InventoryClickListener implements Listener {
             case 44 -> {
                 main.getClipboardManager().getClipboard(player.getUniqueId()).remove();
                 main.getClipboardManager().removeClipboard(player.getUniqueId());
+                player.closeInventory();
             }
         }
 
-        new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
+        if(slot != 26 && slot != 44){
+            new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
+        }
     }
 
     private void handleSizeInteractions(int slot, Player player){
@@ -89,13 +92,19 @@ public class InventoryClickListener implements Listener {
             case 22 -> sizeSettings.setFactor(1);
             case 23 -> sizeSettings.setFactor(5);
             case 24 -> Util.setCustomNumberInput(main, player, settings.getPage());
-            case 26 -> main.getClipboardManager().removeClipboard(player.getUniqueId());
+            case 26 -> {
+                main.getClipboardManager().removeClipboard(player.getUniqueId());
+                player.closeInventory();
+            }
             case 44 -> {
                 main.getClipboardManager().getClipboard(player.getUniqueId()).remove();
                 main.getClipboardManager().removeClipboard(player.getUniqueId());
+                player.closeInventory();
             }
         }
-        new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
+        if(slot != 26 && slot != 44){
+            new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
+        }
     }
 
     private void handleRotationInteractions(int slot, Player player) {
@@ -115,14 +124,20 @@ public class InventoryClickListener implements Listener {
             case 30 -> rotationSettings.setAxis(Axis.X);
             case 31 -> rotationSettings.setAxis(Axis.Y);
             case 32 -> rotationSettings.setAxis(Axis.Z);
-            case 26 -> main.getClipboardManager().removeClipboard(player.getUniqueId());
+            case 26 -> {
+                main.getClipboardManager().removeClipboard(player.getUniqueId());
+                player.closeInventory();
+            }
             case 44 -> {
                 main.getClipboardManager().getClipboard(player.getUniqueId()).remove();
                 main.getClipboardManager().removeClipboard(player.getUniqueId());
+                player.closeInventory();
             }
         }
 
-        new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
+        if(slot != 26 && slot != 44){
+            new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
+        }
     }
 
     private void handleTransformInteractions(int slot, Player player){
@@ -138,13 +153,19 @@ public class InventoryClickListener implements Listener {
             case 22 -> wrapper.setTransform(ItemDisplay.ItemDisplayTransform.GUI);
             case 23 -> wrapper.setTransform(ItemDisplay.ItemDisplayTransform.HEAD);
             case 24 -> wrapper.setTransform(ItemDisplay.ItemDisplayTransform.THIRDPERSON_RIGHTHAND);
-            case 26 -> main.getClipboardManager().removeClipboard(player.getUniqueId());
+            case 26 -> {
+                main.getClipboardManager().removeClipboard(player.getUniqueId());
+                player.closeInventory();
+            }
             case 44 -> {
                 main.getClipboardManager().getClipboard(player.getUniqueId()).remove();
                 main.getClipboardManager().removeClipboard(player.getUniqueId());
+                player.closeInventory();
             }
         }
-        new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
+        if(slot != 26 && slot != 44){
+            new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
+        }
     }
 }
 
