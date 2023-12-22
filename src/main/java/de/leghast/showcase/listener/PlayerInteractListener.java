@@ -26,19 +26,21 @@ public class PlayerInteractListener implements Listener {
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent e){
         if(e.getDamager() instanceof Player player){
-            Material material = player.getInventory().getItemInMainHand().getType();
-            if(material == ConfigManager.getToolMaterial() && e.getEntity() instanceof Interaction interaction && player.isSneaking()){
-                if(main.getEntityManager().isLinked(interaction)){
-                    e.setCancelled(true);
-                    ItemDisplay display = main.getEntityManager().getItemDisplay(interaction);
-                    if(main.getClipboardManager().hasClipboard(player.getUniqueId())){
-                        if(display != main.getClipboardManager().getClipboard(player.getUniqueId()).getDisplay()){
+            if(player.hasPermission("showcase.use")) {
+                Material material = player.getInventory().getItemInMainHand().getType();
+                if (material == ConfigManager.getToolMaterial() && e.getEntity() instanceof Interaction interaction && player.isSneaking()) {
+                    if (main.getEntityManager().isLinked(interaction)) {
+                        e.setCancelled(true);
+                        ItemDisplay display = main.getEntityManager().getItemDisplay(interaction);
+                        if (main.getClipboardManager().hasClipboard(player.getUniqueId())) {
+                            if (display != main.getClipboardManager().getClipboard(player.getUniqueId()).getDisplay()) {
+                                main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayWrapper(display, main.getEntityManager().getInteraction(display)));
+                            } else {
+                                main.getClipboardManager().removeClipboard(player.getUniqueId());
+                            }
+                        } else {
                             main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayWrapper(display, main.getEntityManager().getInteraction(display)));
-                        }else{
-                            main.getClipboardManager().removeClipboard(player.getUniqueId());
                         }
-                    }else{
-                        main.getClipboardManager().updateClipboard(player.getUniqueId(), new DisplayWrapper(display, main.getEntityManager().getInteraction(display)));
                     }
                 }
             }
@@ -50,7 +52,7 @@ public class PlayerInteractListener implements Listener {
         Player player = e.getPlayer();
         Material material = player.getInventory().getItemInMainHand().getType();
 
-        if(material == ConfigManager.getToolMaterial()){
+        if(material == ConfigManager.getToolMaterial() && player.hasPermission("showcase.use")){
             e.setCancelled(true);
             if(main.getClipboardManager().hasClipboard(player.getUniqueId())){
                 if(e.getAction().isLeftClick()){

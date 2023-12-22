@@ -15,7 +15,9 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
-        main.getSettingsManager().addAdjusterSettings(e.getPlayer().getUniqueId());
+        if(e.getPlayer().hasPermission("showcase.use")) {
+            main.getSettingsManager().addAdjusterSettings(e.getPlayer().getUniqueId());
+        }
     }
 
 }

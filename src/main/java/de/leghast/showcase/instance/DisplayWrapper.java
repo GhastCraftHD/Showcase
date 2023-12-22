@@ -30,6 +30,12 @@ public class DisplayWrapper {
         return display;
     }
 
+    /**
+     * Moves the display along the given axis by the given factor.
+     *
+     * @param axis The axis to move along
+     * @param factor The factor to move by
+     */
     public void move(Axis axis, double factor){
         switch (axis){
             case X -> {
@@ -47,6 +53,12 @@ public class DisplayWrapper {
         }
     }
 
+    /**
+     * Rotates the display around the given axis by the given factor.
+     *
+     * @param axis The axis to rotate around
+     * @param factor The factor to rotate by
+     */
     public void rotate(Axis axis, double factor){
         float radiant = (float) Math.toRadians(factor);
         Transformation transformation = display.getTransformation();

@@ -19,7 +19,7 @@ public class PlayerDropListener implements Listener {
     @EventHandler
     public void onPlayerDrop(PlayerDropItemEvent e){
         Player player = e.getPlayer();
-        if(player.isSneaking()){
+        if(player.isSneaking() && player.hasPermission("showcase.use")){
             e.setCancelled(true);
             ItemDisplay display = main.getEntityManager().spawnItemDisplay(
                     player.getLocation().add(0, 1, 0),

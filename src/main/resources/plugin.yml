@@ -4,3 +4,8 @@ main: de.leghast.showcase.Showcase
 api-version: '1.20'
 authors: [GhastCraftHD]
 description: A tool that makes working with Item Displays easy
+
+permissions:
+  showcase.use:
+    default: true
+    description: The permission that lets you use Showcase
