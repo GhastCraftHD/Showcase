@@ -13,3 +13,5 @@ Use the **adjuster tool** (Amethyst Shard by default) to open the **adjuster int
 Use **left or right click** while holding the **adjuster tool** to perform your action
 
 **Sneak** and **hit** to **select/deselect** an item display in your world
+
+![](https://github.com/LeGhast/Showcase/blob/master/showcase.jpg?raw=true)
