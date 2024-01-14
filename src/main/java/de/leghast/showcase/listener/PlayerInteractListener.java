@@ -53,6 +53,9 @@ public class PlayerInteractListener implements Listener {
         Material material = player.getInventory().getItemInMainHand().getType();
 
         if(material == ConfigManager.getToolMaterial() && player.hasPermission("showcase.use")){
+            if(!main.getSettingsManager().hasAdjusterSettings(player.getUniqueId())){
+                main.getSettingsManager().addAdjusterSettings(player.getUniqueId());
+            }
             e.setCancelled(true);
             if(main.getClipboardManager().hasClipboard(player.getUniqueId())){
                 if(e.getAction().isLeftClick()){

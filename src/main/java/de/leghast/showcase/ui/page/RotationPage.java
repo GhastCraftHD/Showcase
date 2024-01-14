@@ -2,6 +2,7 @@ package de.leghast.showcase.ui.page;
 
 import de.leghast.showcase.Showcase;
 import de.leghast.showcase.manager.ConfigManager;
+import de.leghast.showcase.ui.Page;
 import org.bukkit.Axis;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,56 +20,7 @@ public class RotationPage {
         double factor = main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getRotationSettings().getFactor();
         Axis axis = main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getRotationSettings().getAxis();
 
-        ItemStack position = new ItemStack(Material.MAGENTA_GLAZED_TERRACOTTA);
-        ItemMeta positionMeta = position.getItemMeta();
-        positionMeta.setDisplayName("§ePosition");
-        List<String> positionLore = new ArrayList<>();
-        positionLore.add("§7Adjust the position");
-        positionLore.add("§7of the item display");
-        positionMeta.setLore(positionLore);
-        position.setItemMeta(positionMeta);
-        content[0] = position;
-
-        ItemStack size = new ItemStack(Material.PUFFERFISH);
-        ItemMeta sizeMeta = size.getItemMeta();
-        sizeMeta.setDisplayName("§eSize");
-        List<String> sizeLore = new ArrayList<>();
-        sizeLore.add("§7Adjust the size");
-        sizeLore.add("§7of the item display");
-        sizeMeta.setLore(sizeLore);
-        size.setItemMeta(sizeMeta);
-        content[9] = size;
-
-        ItemStack rotation = new ItemStack(Material.ITEM_FRAME);
-        ItemMeta rotationMeta = rotation.getItemMeta();
-        rotationMeta.setDisplayName("§eRotation");
-        List<String> rotationLore = new ArrayList<>();
-        rotationLore.add("§7Adjust the rotation");
-        rotationLore.add("§7of the item display");
-        rotationMeta.setLore(rotationLore);
-        rotation.setItemMeta(rotationMeta);
-        PageUtil.addGlint(rotation);
-        content[18] = rotation;
-
-        ItemStack transform = new ItemStack(Material.BAMBOO_HANGING_SIGN);
-        ItemMeta transformMeta = transform.getItemMeta();
-        transformMeta.setDisplayName("§eTransform");
-        List<String> transformLore = new ArrayList<>();
-        transformLore.add("§7Set the transform");
-        transformLore.add("§7of the item display");
-        transformMeta.setLore(transformLore);
-        transform.setItemMeta(transformMeta);
-        content[27] = transform;
-
-        ItemStack adjuster = new ItemStack(ConfigManager.getToolMaterial());
-        ItemMeta adjusterMeta = adjuster.getItemMeta();
-        adjusterMeta.setDisplayName("§6Showcase Tool");
-        List<String> adjusterLore = new ArrayList<>();
-        adjusterLore.add("§7The selected adjusting");
-        adjusterLore.add("§7settings are bound to this item");
-        adjusterMeta.setLore(adjusterLore);
-        adjuster.setItemMeta(adjusterMeta);
-        content[8] = adjuster;
+        PageUtil.addPageSwitchItems(content, Page.ROTATION);
 
         ItemStack quarter = new ItemStack(Material.COAL);
         ItemMeta quarterMeta = quarter.getItemMeta();

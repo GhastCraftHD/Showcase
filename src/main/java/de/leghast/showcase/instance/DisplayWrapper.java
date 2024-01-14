@@ -77,7 +77,6 @@ public class DisplayWrapper {
 
         interaction.teleport(display.getLocation().subtract(0, display.getTransformation().getScale().y/2, 0));
         resizeInteraction();
-
     }
 
     public void scaleDown(double factor){

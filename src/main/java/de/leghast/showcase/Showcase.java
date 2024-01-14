@@ -43,7 +43,6 @@ public final class Showcase extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerDropListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(this), this);
         Bukkit.getPluginManager().registerEvents(new WorldListener(this), this);
     }

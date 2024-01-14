@@ -16,12 +16,9 @@ import java.util.UUID;
 
 public class EntityManager {
 
-    private Showcase main;
-
     private NamespacedKey entityLinkKey;
 
     public EntityManager(Showcase main){
-        this.main = main;
         entityLinkKey = new NamespacedKey(main, "showcase-entity-link");
     }
 
