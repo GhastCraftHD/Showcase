@@ -34,17 +34,24 @@ public class EntityManager {
     }
 
     public Interaction spawnInteractionEntity(ItemDisplay display){
-        Interaction interaction = (Interaction)
-                display.getLocation().getWorld().spawnEntity(
-                        display.getLocation().subtract(0, display.getTransformation().getScale().y/2, 0),
-                        EntityType.INTERACTION
-                );
-        interaction.setInteractionWidth(display.getTransformation().getScale().x);
-        interaction.setInteractionHeight(display.getTransformation().getScale().y);
+        if(!isLinked(display)){
+            Interaction interaction = (Interaction)
+                    display.getLocation().getWorld().spawnEntity(
+                            display.getLocation().subtract(0, display.getTransformation().getScale().y/2, 0),
+                            EntityType.INTERACTION
+                    );
 
-        linkEntities(display, interaction);
 
-        return interaction;
+            linkEntities(display, interaction);
+
+            return interaction;
+        }else{
+            Interaction interaction = getInteraction(display);
+            interaction.setInteractionWidth(display.getTransformation().getScale().x);
+            interaction.setInteractionHeight(display.getTransformation().getScale().y);
+            interaction.teleport(display.getLocation().subtract(0, display.getTransformation().getScale().y/2, 0));
+            return interaction;
+        }
     }
 
     public void spawnInteractionEntitiesInChunk(Chunk chunk){
@@ -84,9 +91,10 @@ public class EntityManager {
 
     public void removeInteractionEntity(Interaction interaction){
         if(isLinked(interaction)){
-            System.out.println("Removed Interaction");
             ItemDisplay display = getItemDisplay(interaction);
-            unlinkEntities(display, interaction);
+            if(display != null){
+                unlinkEntities(display, interaction);
+            }
             interaction.remove();
         }
     }

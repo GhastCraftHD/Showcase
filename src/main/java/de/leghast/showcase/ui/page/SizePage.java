@@ -1,15 +1,11 @@
 package de.leghast.showcase.ui.page;
 
 import de.leghast.showcase.Showcase;
-import de.leghast.showcase.manager.ConfigManager;
 import de.leghast.showcase.ui.Page;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SizePage {
 
@@ -66,28 +62,7 @@ public class SizePage {
         }
         content[24] = custom;
 
-        ItemStack delete = new ItemStack(Material.BARRIER);
-        ItemMeta deleteMeta = delete.getItemMeta();
-        deleteMeta.setDisplayName("§cDelete Item Display");
-        delete.setItemMeta(deleteMeta);
-        content[44] = delete;
-
-        ItemStack deselect = new ItemStack(Material.STRUCTURE_VOID);
-        ItemMeta deselectMeta = deselect.getItemMeta();
-        deselectMeta.setDisplayName("§cDeselect Item Display");
-        deselect.setItemMeta(deselectMeta);
-        content[26] = deselect;
-
-        ItemStack filler = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-        ItemMeta fillerMeta = filler.getItemMeta();
-        fillerMeta.setDisplayName(" ");
-        filler.setItemMeta(fillerMeta);
-
-        for (int i = 0; i < content.length; i++) {
-            if (content[i] == null) {
-                content[i] = filler;
-            }
-        }
+        PageUtil.addGeneralItems(content);
 
         return content;
     }

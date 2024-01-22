@@ -3,9 +3,8 @@ package de.leghast.showcase.listener;
 import de.leghast.showcase.Showcase;
 import de.leghast.showcase.instance.DisplayWrapper;
 import de.leghast.showcase.instance.settings.AdjusterSettings;
-import de.leghast.showcase.instance.settings.PositionSettings;
-import de.leghast.showcase.instance.settings.RotationSettings;
-import de.leghast.showcase.instance.settings.SizeSettings;
+import de.leghast.showcase.instance.settings.DimensionSettings;
+import de.leghast.showcase.instance.settings.FactorSettings;
 import de.leghast.showcase.manager.ConfigManager;
 import de.leghast.showcase.ui.Page;
 import de.leghast.showcase.ui.UserInterface;
@@ -47,7 +46,7 @@ public class InventoryClickListener implements Listener {
 
     private void handlePositionInteractions(int slot, Player player) {
         AdjusterSettings settings = main.getSettingsManager().getAdjusterSettings(player.getUniqueId());
-        PositionSettings positionSettings = settings.getPositionSettings();
+        DimensionSettings positionSettings = settings.getPositionSettings();
 
         switch (slot) {
             case 8 -> player.getInventory().addItem(new ItemStack(ConfigManager.getToolMaterial()));
@@ -80,7 +79,7 @@ public class InventoryClickListener implements Listener {
 
     private void handleSizeInteractions(int slot, Player player){
         AdjusterSettings settings = main.getSettingsManager().getAdjusterSettings(player.getUniqueId());
-        SizeSettings sizeSettings = settings.getSizeSettings();
+        FactorSettings sizeSettings = settings.getSizeSettings();
 
         switch (slot){
             case 0 -> settings.setPage(Page.POSITION);
@@ -109,7 +108,7 @@ public class InventoryClickListener implements Listener {
 
     private void handleRotationInteractions(int slot, Player player) {
         AdjusterSettings settings = main.getSettingsManager().getAdjusterSettings(player.getUniqueId());
-        RotationSettings rotationSettings = settings.getRotationSettings();
+        DimensionSettings rotationSettings = settings.getRotationSettings();
 
         switch (slot) {
             case 0 -> settings.setPage(Page.POSITION);
