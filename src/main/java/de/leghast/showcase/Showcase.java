@@ -10,17 +10,29 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public final class Showcase extends JavaPlugin {
 
     private EntityManager entityManager;
     private ClipboardManager clipboardManager;
     private SettingsManager settingsManager;
 
+    private String owner = "LeGhast";
+    private String repo = "Showcase";
+
+    private boolean updateAvailable;
+
     @Override
     public void onEnable() {
         registerListener();
         initialiseManagers();
         initialise();
+        updateAvailable = isUpdateAvailable("v" + getDescription().getVersion());
     }
 
     @Override
@@ -53,6 +65,7 @@ public final class Showcase extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
     }
 
     public EntityManager getEntityManager(){
@@ -65,6 +78,53 @@ public final class Showcase extends JavaPlugin {
 
     public SettingsManager getSettingsManager(){
         return settingsManager;
+    }
+
+    public String getLatestReleaseVersion(){
+        String apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/releases/latest";
+
+        try {
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            try {
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
+
+                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+
+                    reader.close();
+
+                    return response.toString().contains("tag_name")
+                            ? response.toString().split("\"tag_name\":\"")[1].split("\",")[0]
+                            : null;
+                } else {
+                    // Handle the error response
+                    System.out.println("Error: " + connection.getResponseCode() + " " + connection.getResponseMessage());
+                    return null;
+                }
+            } finally {
+                connection.disconnect();
+            }
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    private boolean isUpdateAvailable(String currentVersion){
+        String latestVersion = getLatestReleaseVersion();
+        return latestVersion != null && !latestVersion.equals(currentVersion);
+    }
+
+    public boolean isUpdateAvailable(){
+        return updateAvailable;
     }
 
 }
