@@ -1,9 +1,8 @@
-package de.leghast.showcase.util;
+package de.leghast.showcase.ui;
 
 import de.leghast.showcase.Showcase;
-import de.leghast.showcase.instance.settings.AdjusterSettings;
-import de.leghast.showcase.ui.Page;
-import de.leghast.showcase.ui.page.PageUtil;
+import de.leghast.showcase.settings.AdjusterSettings;
+import net.kyori.adventure.text.Component;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,20 +11,18 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 
-public class Util {
+public class AnvilInputHelper {
 
-    public static final String PREFIX = "§7[§dShowcase§7] ";
-
-    public static void setCustomNumberInput(Showcase main, Player player, Page page){
-        ItemStack output = new ItemStack(Material.PAPER);
-        ItemMeta meta = output.getItemMeta();
-        meta.setDisplayName("§eSet custom factor");
-        output.setItemMeta(meta);
-        PageUtil.addGlint(output);
+    public static void setCustomNumberInput(Showcase main, Player player, Page page, double factor){
+        ItemStack output = new InterfaceItem(
+                Material.PAPER,
+                Component.text("Set custom factor"),
+                () -> true
+        );
 
         new AnvilGUI.Builder()
                 .title("§eEnter custom factor")
-                .text("1")
+                .text(String.valueOf(factor))
                 .onClick((slot, stateSnapshot) -> {
                     if(slot == AnvilGUI.Slot.OUTPUT){
                         AdjusterSettings settings = main.getSettingsManager().getAdjusterSettings(player.getUniqueId());

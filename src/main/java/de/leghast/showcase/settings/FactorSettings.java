@@ -1,10 +1,10 @@
-package de.leghast.showcase.instance.settings;
+package de.leghast.showcase.settings;
 
-import de.leghast.showcase.util.Util;
+import de.leghast.showcase.constant.Message;
 
 public class FactorSettings {
 
-    private AdjusterSettings parent;
+    private final AdjusterSettings parent;
 
     private double factor;
 
@@ -24,9 +24,9 @@ public class FactorSettings {
     public void setFactor(String factor){
         try{
             this.factor = Double.parseDouble(factor);
-            parent.getPlayer().sendMessage(Util.PREFIX + "§aThe factor was set to §e" + this.factor + " block" + (this.factor == 1 ? "" : "s"));
+            parent.getPlayer().sendMessage(Message.changedFactor(this.factor));
         }catch(NumberFormatException e){
-            parent.getPlayer().sendMessage(Util.PREFIX + "§cPlease provide a valid factor");
+            parent.getPlayer().sendMessage(Message.INVALID_FACTOR);
         }
     }
 

@@ -1,21 +1,23 @@
 package de.leghast.showcase.manager;
 
 import de.leghast.showcase.Showcase;
-import de.leghast.showcase.instance.settings.AdjusterSettings;
+import de.leghast.showcase.settings.AdjusterSettings;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class SettingsManager {
 
-    private Showcase main;
 
-    private HashMap<UUID, AdjusterSettings> adjusterSettings;
+    private final Map<UUID, AdjusterSettings> adjusterSettings;
+    private final Map<UUID, Boolean> enabled;
 
-    public SettingsManager(Showcase main){
-        this.main = main;
+
+    public SettingsManager(){
         adjusterSettings = new HashMap<>();
+        enabled = new HashMap<>();
     }
 
     public boolean hasAdjusterSettings(UUID uuid){
@@ -34,6 +36,22 @@ public class SettingsManager {
         adjusterSettings.remove(uuid);
     }
 
+    public boolean isEnabled(UUID uuid){
+        if(!enabled.containsKey(uuid)) setEnabled(uuid, ConfigManager.ENABLED_BY_DEFAULT);
+        return enabled.get(uuid);
+    }
+
+    public void setEnabled(UUID uuid, boolean enabled){
+        this.enabled.put(uuid, enabled);
+    }
+
+    public void removeEnabled(UUID uuid){
+        enabled.remove(uuid);
+    }
+
+    public void toggleEnabled(UUID uuid){
+        enabled.put(uuid, !isEnabled(uuid));
+    }
 
 
 }

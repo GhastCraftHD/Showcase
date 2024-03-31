@@ -1,15 +1,15 @@
-package de.leghast.showcase.instance.settings;
+package de.leghast.showcase.settings;
 
 import de.leghast.showcase.ui.Page;
 import org.bukkit.entity.Player;
 
 public class AdjusterSettings {
 
-    private Player player;
+    private final Player player;
 
-    private DimensionSettings positionSettings;
-    private FactorSettings sizeSettings;
-    private DimensionSettings rotationSettings;
+    private final DimensionSettings positionSettings;
+    private final FactorSettings sizeSettings;
+    private final DimensionSettings rotationSettings;
 
     private Page page;
 

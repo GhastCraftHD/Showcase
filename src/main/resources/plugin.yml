@@ -5,6 +5,10 @@ api-version: "$apiVersion"
 authors: [GhastCraftHD]
 description: $description
 
+commands:
+  showcase:
+    description: The main command for Showcase
+
 permissions:
   showcase.use:
     default: op

@@ -1,18 +1,17 @@
 package de.leghast.showcase.manager;
 
 import de.leghast.showcase.Showcase;
-import de.leghast.showcase.instance.DisplayWrapper;
+import de.leghast.showcase.display.DisplayWrapper;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class ClipboardManager {
 
-    private Showcase main;
-    private HashMap<UUID, DisplayWrapper> clipboard;
+    private final Map<UUID, DisplayWrapper> clipboard;
 
-    public ClipboardManager(Showcase main){
-        this.main = main;
+    public ClipboardManager(){
         clipboard = new HashMap<>();
     }
 
@@ -35,5 +34,4 @@ public class ClipboardManager {
         }
         clipboard.remove(uuid);
     }
-
 }

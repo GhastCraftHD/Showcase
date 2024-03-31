@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuitListener implements Listener {
 
-    private Showcase main;
+    private final Showcase main;
 
     public PlayerQuitListener(Showcase main){
         this.main = main;
@@ -17,6 +17,7 @@ public class PlayerQuitListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent e){
         main.getClipboardManager().removeClipboard(e.getPlayer().getUniqueId());
         main.getSettingsManager().removeAdjusterSettings(e.getPlayer().getUniqueId());
+        main.getSettingsManager().removeEnabled(e.getPlayer().getUniqueId());
     }
 
 }

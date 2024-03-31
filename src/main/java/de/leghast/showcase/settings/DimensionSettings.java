@@ -1,4 +1,4 @@
-package de.leghast.showcase.instance.settings;
+package de.leghast.showcase.settings;
 
 import org.bukkit.Axis;
 
