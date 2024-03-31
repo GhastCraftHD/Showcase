@@ -16,7 +16,7 @@ repositories {
 
 group = "de.leghast"
 version = "1.3.0"
-description = "A tool that makes working with Item Displays easy"
+description = "Use Item Displays with ease"
 
 java {
   // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.

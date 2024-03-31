@@ -4,6 +4,7 @@ import de.leghast.showcase.Showcase;
 import de.leghast.showcase.constant.Message;
 import de.leghast.showcase.manager.ConfigManager;
 import de.leghast.showcase.ui.AnvilInputHelper;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,13 +22,16 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
 
-        main.getSettingsManager().setEnabled(player.getUniqueId(), ConfigManager.ENABLED_BY_DEFAULT);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(main,
+                () -> {
+                    if(player.isOp()){
+                        if(main.isUpdateAvailable()){
+                            player.sendMessage(Message.newVersionAvailable(main.getLatestReleaseVersion()));
+                        }
+                    }
+                }, 10L
+        );
 
-        if(player.isOp()){
-            if(main.isUpdateAvailable()){
-                player.sendMessage(Message.newVersionAvailable(main.getLatestReleaseVersion()));
-            }
-        }
     }
 
 }
