@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class EntityManager {
 
-    private NamespacedKey entityLinkKey;
+    private final NamespacedKey entityLinkKey;
 
     public EntityManager(Showcase main){
         entityLinkKey = new NamespacedKey(main, "showcase-entity-link");
@@ -26,7 +26,7 @@ public class EntityManager {
         location = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location, EntityType.ITEM_DISPLAY);
         display.setItemStack(new ItemStack(material));
-        display.setItemDisplayTransform(ConfigManager.getDefaultTransform());
+        display.setItemDisplayTransform(ConfigManager.DEFAULT_TRANSFORM);
 
         spawnInteractionEntity(display);
 
@@ -94,6 +94,7 @@ public class EntityManager {
             ItemDisplay display = getItemDisplay(interaction);
             if(display != null){
                 unlinkEntities(display, interaction);
+                display.setGlowing(false);
             }
             interaction.remove();
         }

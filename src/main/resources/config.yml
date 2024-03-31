@@ -1,2 +1,4 @@
+check-for-update: true
+enabled-by-default: false
 default-transform: FIXED
 tool: AMETHYST_SHARD

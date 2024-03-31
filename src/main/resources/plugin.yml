@@ -1,11 +1,15 @@
-name: Showcase
-version: '${project.version}'
+name: $name
+version: $version
 main: de.leghast.showcase.Showcase
-api-version: '1.20'
+api-version: "$apiVersion"
 authors: [GhastCraftHD]
-description: A tool that makes working with Item Displays easy
+description: $description
+
+commands:
+  showcase:
+    description: The main command for Showcase
 
 permissions:
   showcase.use:
-    default: true
+    default: op
     description: The permission that lets you use Showcase

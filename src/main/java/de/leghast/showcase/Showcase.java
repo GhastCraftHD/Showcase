@@ -1,5 +1,6 @@
 package de.leghast.showcase;
 
+import de.leghast.showcase.command.ShowcaseCommand;
 import de.leghast.showcase.listener.*;
 import de.leghast.showcase.manager.ClipboardManager;
 import de.leghast.showcase.manager.ConfigManager;
@@ -15,24 +16,30 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 public final class Showcase extends JavaPlugin {
+
+    public static String PERMISSION = "showcase.use";
 
     private EntityManager entityManager;
     private ClipboardManager clipboardManager;
     private SettingsManager settingsManager;
 
-    private String owner = "LeGhast";
-    private String repo = "Showcase";
+    private boolean updateAvailable = false;
+    private String latestVersion = this.getPluginMeta().getVersion();
 
-    private boolean updateAvailable;
+    @Override
+    public void onLoad(){
+        ConfigManager.setupConfig(this);
+    }
 
     @Override
     public void onEnable() {
         registerListener();
         initialiseManagers();
-        initialise();
-        updateAvailable = isUpdateAvailable("v" + getDescription().getVersion());
+        registerCommands();
+        checkForUpdate();
     }
 
     @Override
@@ -45,18 +52,9 @@ public final class Showcase extends JavaPlugin {
     }
 
     private void initialiseManagers(){
-        ConfigManager.setupConfig(this);
         entityManager = new EntityManager(this);
-        clipboardManager = new ClipboardManager(this);
-        settingsManager = new SettingsManager(this);
-    }
-
-    private void initialise(){
-        for(World world : Bukkit.getWorlds()){
-            for(Chunk chunk : world.getLoadedChunks()){
-                entityManager.spawnInteractionEntitiesInChunk(chunk);
-            }
-        }
+        clipboardManager = new ClipboardManager();
+        settingsManager = new SettingsManager();
     }
 
     private void registerListener(){
@@ -66,6 +64,12 @@ public final class Showcase extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new EntityDamageListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerInteractEntityListener(this), this);
+    }
+
+    private void registerCommands(){
+        getCommand("showcase").setExecutor(new ShowcaseCommand(this));
     }
 
     public EntityManager getEntityManager(){
@@ -80,51 +84,54 @@ public final class Showcase extends JavaPlugin {
         return settingsManager;
     }
 
-    public String getLatestReleaseVersion(){
-        String apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/releases/latest";
+    private void checkForUpdate() {
+        if (!ConfigManager.CHECK_FOR_UPDATE) return;
 
-        try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        String apiUrl = "https://api.github.com/repos/GhastCraftHD/Showcase/releases/latest";
 
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
             try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
-                connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
 
-                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                try {
+                    connection.setRequestProperty("Content-Type", "application/json");
+
+                    if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) return;
+
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String input;
                     StringBuilder response = new StringBuilder();
-                    String line;
 
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
+                    while ((input = in.readLine()) != null) {
+                        response.append(input);
                     }
 
-                    reader.close();
+                    in.close();
+                    connection.disconnect();
 
-                    return response.toString().contains("tag_name")
-                            ? response.toString().split("\"tag_name\":\"")[1].split("\",")[0]
-                            : null;
-                } else {
-                    // Handle the error response
-                    System.out.println("Error: " + connection.getResponseCode() + " " + connection.getResponseMessage());
-                    return null;
+                    if (!response.toString().contains("tag_name")) return;
+
+                    latestVersion = response.toString().split("\"tag_name\":\"v")[1].split("\",")[0];
+
+                } finally {
+                    connection.disconnect();
                 }
-            } finally {
-                connection.disconnect();
-            }
-        }catch (Exception e){
-            return null;
-        }
-    }
 
-    private boolean isUpdateAvailable(String currentVersion){
-        String latestVersion = getLatestReleaseVersion();
-        return latestVersion != null && !latestVersion.equals(currentVersion);
+            } catch (Exception ignore) {}
+
+            updateAvailable = !Objects.equals(latestVersion, this.getPluginMeta().getVersion());
+        });
+
     }
 
     public boolean isUpdateAvailable(){
         return updateAvailable;
+    }
+
+    public String getLatestReleaseVersion(){
+        return latestVersion;
     }
 
 }

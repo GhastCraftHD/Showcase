@@ -1,8 +1,12 @@
 package de.leghast.showcase.ui.page;
 
 import de.leghast.showcase.Showcase;
-import de.leghast.showcase.instance.DisplayWrapper;
+import de.leghast.showcase.display.DisplayWrapper;
+import de.leghast.showcase.ui.FrequentItems;
+import de.leghast.showcase.ui.InterfaceItem;
 import de.leghast.showcase.ui.Page;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -15,77 +19,41 @@ public class TransformPage {
     public static ItemStack[] getTransformPage(Showcase main, Player player){
         ItemStack[] content = new ItemStack[45];
 
-        DisplayWrapper wrapper = main.getClipboardManager().getClipboard(player.getUniqueId());
+        ItemDisplay.ItemDisplayTransform transform = main.getClipboardManager().getClipboard(player.getUniqueId()).getTransform();
 
-        PageUtil.addPageSwitchItems(content, Page.TRANSFORM);
+        FrequentItems.addPageSwitchItems(content, Page.TRANSFORM);
 
-        ItemStack firstPerson = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
-        ItemMeta firstPersonMeta = firstPerson.getItemMeta();
-        firstPersonMeta.setDisplayName("§7First Person");
-        firstPerson.setItemMeta(firstPersonMeta);
-        if(wrapper.getTransform() == ItemDisplay.ItemDisplayTransform.FIRSTPERSON_RIGHTHAND){
-            PageUtil.addGlint(firstPerson);
-        }
-        content[20] = firstPerson;
+        content[20] = new InterfaceItem(
+                Material.LIGHT_BLUE_STAINED_GLASS_PANE,
+                Component.text("First Person", NamedTextColor.GRAY),
+                () -> transform == ItemDisplay.ItemDisplayTransform.FIRSTPERSON_RIGHTHAND
+        );
 
-        ItemStack fixed = new ItemStack(Material.SHIELD);
-        ItemMeta fixedMeta = fixed.getItemMeta();
-        fixedMeta.setDisplayName("§7Fixed");
-        fixed.setItemMeta(fixedMeta);
-        if(wrapper.getTransform() == ItemDisplay.ItemDisplayTransform.FIXED){
-            PageUtil.addGlint(fixed);
-        }
-        content[21] = fixed;
+        content[21] = new InterfaceItem(
+                Material.SHIELD,
+                Component.text("Fixed", NamedTextColor.GRAY),
+                () -> transform == ItemDisplay.ItemDisplayTransform.FIXED
+        );
 
-        ItemStack gui = new ItemStack(Material.CHEST);
-        ItemMeta guiMeta = gui.getItemMeta();
-        guiMeta.setDisplayName("§7GUI");
-        gui.setItemMeta(guiMeta);
-        if(wrapper.getTransform() == ItemDisplay.ItemDisplayTransform.GUI){
-            PageUtil.addGlint(gui);
-        }
-        content[22] = gui;
+        content[22] = new InterfaceItem(
+                Material.CHEST,
+                Component.text("GUI", NamedTextColor.GRAY),
+                () -> transform == ItemDisplay.ItemDisplayTransform.GUI
+        );
 
-        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-        ItemMeta headMeta = head.getItemMeta();
-        headMeta.setDisplayName("§7Head");
-        head.setItemMeta(headMeta);
-        if(wrapper.getTransform() == ItemDisplay.ItemDisplayTransform.HEAD){
-            PageUtil.addGlint(head);
-        }
-        content[23] = head;
+        content[23] = new InterfaceItem(
+                Material.PLAYER_HEAD,
+                Component.text("Head", NamedTextColor.GRAY),
+                () -> transform == ItemDisplay.ItemDisplayTransform.HEAD
+        );
 
-        ItemStack thirdPerson = new ItemStack(Material.ORANGE_STAINED_GLASS_PANE);
-        ItemMeta thirdPersonMeta = thirdPerson.getItemMeta();
-        thirdPersonMeta.setDisplayName("§7Third Person");
-        thirdPerson.setItemMeta(thirdPersonMeta);
-        if(wrapper.getTransform() == ItemDisplay.ItemDisplayTransform.THIRDPERSON_RIGHTHAND){
-            PageUtil.addGlint(thirdPerson);
-        }
-        content[24] = thirdPerson;
+        content[24] = new InterfaceItem(
+                Material.ORANGE_STAINED_GLASS_PANE,
+                Component.text("Third Person", NamedTextColor.GRAY),
+                () -> transform == ItemDisplay.ItemDisplayTransform.THIRDPERSON_RIGHTHAND
+        );
 
-        ItemStack delete = new ItemStack(Material.BARRIER);
-        ItemMeta deleteMeta = delete.getItemMeta();
-        deleteMeta.setDisplayName("§cDelete Item Display");
-        delete.setItemMeta(deleteMeta);
-        content[44] = delete;
-
-        ItemStack deselect = new ItemStack(Material.STRUCTURE_VOID);
-        ItemMeta deselectMeta = deselect.getItemMeta();
-        deselectMeta.setDisplayName("§cDeselect Item Display");
-        deselect.setItemMeta(deselectMeta);
-        content[26] = deselect;
-
-        ItemStack filler = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-        ItemMeta fillerMeta = filler.getItemMeta();
-        fillerMeta.setDisplayName(" ");
-        filler.setItemMeta(fillerMeta);
-
-        for(int i = 0; i < content.length; i++){
-            if(content[i] == null){
-                content[i] = filler;
-            }
-        }
+        FrequentItems.addGeneralItems(content, main.getSettingsManager().isEnabled(player.getUniqueId()));
 
         return content;
     }

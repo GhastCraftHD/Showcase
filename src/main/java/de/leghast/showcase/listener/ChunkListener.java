@@ -9,7 +9,7 @@ import org.bukkit.event.world.ChunkUnloadEvent;
 
 public class ChunkListener implements Listener {
 
-    private Showcase main;
+    private final Showcase main;
 
     public ChunkListener(Showcase main){
         this.main = main;

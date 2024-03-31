@@ -1,4 +1,4 @@
-package de.leghast.showcase.instance;
+package de.leghast.showcase.display;
 
 import org.bukkit.Axis;
 import org.bukkit.entity.Interaction;
@@ -7,14 +7,12 @@ import org.bukkit.util.Transformation;
 
 public class DisplayWrapper {
 
-    private ItemDisplay display;
-    private Interaction interaction;
-    private double size;
+    private final ItemDisplay display;
+    private final Interaction interaction;
 
     public DisplayWrapper(ItemDisplay display, Interaction interaction){
         this.display = display;
         this.interaction = interaction;
-        size = display.getTransformation().getScale().x;
         display.setGlowing(true);
     }
 
@@ -23,7 +21,7 @@ public class DisplayWrapper {
     }
 
     public double getSize(){
-        return size;
+        return display.getTransformation().getScale().x();
     }
 
     public ItemDisplay getDisplay(){
