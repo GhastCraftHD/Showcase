@@ -20,11 +20,14 @@ public class SettingsManager {
         enabled = new HashMap<>();
     }
 
-    public boolean hasAdjusterSettings(UUID uuid){
+    private boolean hasAdjusterSettings(UUID uuid){
         return adjusterSettings.containsKey(uuid);
     }
 
     public AdjusterSettings getAdjusterSettings(UUID uuid){
+        if(!hasAdjusterSettings(uuid)){
+            addAdjusterSettings(uuid);
+        }
         return adjusterSettings.get(uuid);
     }
 

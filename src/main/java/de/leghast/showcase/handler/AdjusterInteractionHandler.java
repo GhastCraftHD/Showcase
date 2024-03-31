@@ -26,10 +26,6 @@ public class AdjusterInteractionHandler {
 
         cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 100);
 
-        if(!main.getSettingsManager().hasAdjusterSettings(player.getUniqueId())){
-            main.getSettingsManager().addAdjusterSettings(player.getUniqueId());
-        }
-
 
         if(!main.getClipboardManager().hasClipboard(player.getUniqueId())){
             player.sendMessage(Message.NO_CLIPBOARD);
