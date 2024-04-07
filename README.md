@@ -31,6 +31,7 @@ tool: AMETHYST_SHARD
 
 <img align="right" src="https://github.com/GhastCraftHD/Showcase/blob/master/documentation/section_permissions_white.png?raw=true">\
 \
+\
 By default only server operators are able to use Showcase. If you want to give other players the right to use Showcase you need to grant them the permission `showcase.use`
 
 ![](https://github.com/GhastCraftHD/Showcase/blob/master/documentation/section_tutorial_white.png?raw=true)
