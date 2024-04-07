@@ -47,6 +47,7 @@ To remove an Item Display simply click the barrier in the adjuster interface.
 
 <img align="right" src="https://github.com/GhastCraftHD/Showcase/blob/master/documentation/section_support_white.png?raw=true">\
 \
+\
 If you run into any issues feel free to report them to me on [GitHub](https://github.com/GhastCraftHD/Showcase/issues). There you can also suggest new features that could be added to Showcase.
 
 <p align="center">
