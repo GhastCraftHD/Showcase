@@ -30,7 +30,7 @@ public class PlayerDropListener implements Listener {
         }
 
         e.setCancelled(true);
-        new DisplaySpawnHandler(main, player, e.getItemDrop().getItemStack().getType());
+        new DisplaySpawnHandler(main, player, e.getItemDrop().getItemStack());
 
     }
 

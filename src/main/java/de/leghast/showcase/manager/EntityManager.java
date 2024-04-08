@@ -22,10 +22,10 @@ public class EntityManager {
         entityLinkKey = new NamespacedKey(main, "showcase-entity-link");
     }
 
-    public ItemDisplay spawnItemDisplay(Location location, Material material){
+    public ItemDisplay spawnItemDisplay(Location location, ItemStack itemStack){
         location = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location, EntityType.ITEM_DISPLAY);
-        display.setItemStack(new ItemStack(material));
+        display.setItemStack(itemStack);
         display.setItemDisplayTransform(ConfigManager.DEFAULT_TRANSFORM);
 
         spawnInteractionEntity(display);
