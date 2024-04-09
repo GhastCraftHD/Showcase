@@ -66,3 +66,7 @@ Some of these images contain **custom models**. These models are **not** include
 ![](https://github.com/GhastCraftHD/Showcase/blob/master/gallery/enderdragon.jpg?raw=true)
 
 ![](https://github.com/GhastCraftHD/Showcase/blob/master/gallery/wither.jpg?raw=true)
+
+<p align="center">
+  <img src="https://github.com/GhastCraftHD/Showcase/blob/master/gallery/gui.png?raw=true">
+  </p>
