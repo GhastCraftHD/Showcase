@@ -58,6 +58,7 @@ If you run into any issues feel free to report them to me on [GitHub](https://gi
 ![](https://github.com/GhastCraftHD/Showcase/blob/master/documentation/section_gallery_white.png?raw=true)
 
 Some of these images contain **custom models**. These models are **not** included in Showcase and were only used to demonstrate **use cases** and the **abilities of Showcase**. If you wish to acquire them you can do so [here](https://mcmodels.net/products/8776/nogs-plushies-megapack)
+
 ![](https://github.com/GhastCraftHD/Showcase/blob/master/showcase.jpg?raw=true)
 
 ![](https://github.com/GhastCraftHD/Showcase/blob/master/gallery/brush.jpg?raw=true)
