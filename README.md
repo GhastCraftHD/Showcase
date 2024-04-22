@@ -38,7 +38,7 @@ By default only server operators are able to use Showcase. If you want to give o
 
 To spawn a new Item Display simply put the item you want to be displayed in your hand and drop it while sneaking.
 
-To adjust the position, size or rotation of your miniature you can use the adjuster tool (amethyst shard by default) together with the adjuster interface.
+To adjust the position, size or rotation of your Item Display you can use the adjuster tool (amethyst shard by default) together with the adjuster interface.
 You can open the adjuster interface by holding the adjuster tool in your hand, sneak and right click.
 
 To select/deselect an Item Display simply hold the adjuster tool in your hand and hit it while sneaking.
