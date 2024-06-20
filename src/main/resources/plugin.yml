@@ -8,6 +8,7 @@ description: $description
 commands:
   showcase:
     description: The main command for Showcase
+    permission: showcase.use
 
 permissions:
   showcase.use:

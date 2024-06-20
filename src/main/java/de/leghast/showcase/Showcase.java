@@ -1,5 +1,6 @@
 package de.leghast.showcase;
 
+import com.destroystokyo.paper.Metrics;
 import de.leghast.showcase.command.ShowcaseCommand;
 import de.leghast.showcase.listener.*;
 import de.leghast.showcase.manager.ClipboardManager;
@@ -25,6 +26,7 @@ public final class Showcase extends JavaPlugin {
     private EntityManager entityManager;
     private ClipboardManager clipboardManager;
     private SettingsManager settingsManager;
+    private Metrics metrics;
 
     private boolean updateAvailable = false;
     private String latestVersion = this.getPluginMeta().getVersion();
@@ -40,6 +42,12 @@ public final class Showcase extends JavaPlugin {
         initialiseManagers();
         registerCommands();
         checkForUpdate();
+        for(World world : Bukkit.getWorlds()){
+            for(Chunk chunk : world.getLoadedChunks()){
+                entityManager.spawnInteractionEntitiesInChunk(chunk);
+            }
+        }
+        initialiseMetrics();
     }
 
     @Override
@@ -55,6 +63,10 @@ public final class Showcase extends JavaPlugin {
         entityManager = new EntityManager(this);
         clipboardManager = new ClipboardManager();
         settingsManager = new SettingsManager();
+    }
+
+    private void initialiseMetrics(){
+        this.metrics = new Metrics("PaperMC", "22335", true, getLogger());
     }
 
     private void registerListener(){

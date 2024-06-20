@@ -1,6 +1,5 @@
 package de.leghast.showcase.constant;
 
-import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;

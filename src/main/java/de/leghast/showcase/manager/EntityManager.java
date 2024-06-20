@@ -43,6 +43,8 @@ public class EntityManager {
 
 
             linkEntities(display, interaction);
+            interaction.setInteractionWidth(display.getTransformation().getScale().x);
+            interaction.setInteractionHeight(display.getTransformation().getScale().y);
 
             return interaction;
         }else{
