@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "de.leghast"
-version = "1.3.3"
+version = "1.3.4"
 description = "Use Item Displays with ease"
 
 java {
