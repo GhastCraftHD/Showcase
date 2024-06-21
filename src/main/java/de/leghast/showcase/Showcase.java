@@ -1,19 +1,18 @@
 package de.leghast.showcase;
 
-import com.destroystokyo.paper.Metrics;
 import de.leghast.showcase.command.ShowcaseCommand;
 import de.leghast.showcase.listener.*;
 import de.leghast.showcase.manager.ClipboardManager;
 import de.leghast.showcase.manager.ConfigManager;
 import de.leghast.showcase.manager.EntityManager;
 import de.leghast.showcase.manager.SettingsManager;
+import de.leghast.showcase.metrics.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -66,7 +65,7 @@ public final class Showcase extends JavaPlugin {
     }
 
     private void initialiseMetrics(){
-        this.metrics = new Metrics("PaperMC", "22335", true, getLogger());
+        this.metrics = new Metrics(this, 22335);
     }
 
     private void registerListener(){
